@@ -1,6 +1,5 @@
 package org.springframework.data.orient.object.util;
 
-import com.orientechnologies.orient.object.db.OObjectDatabaseTx;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.orient.object.OrientDbObjectTestConfiguration;
@@ -10,15 +9,15 @@ import org.springframework.data.orient.object.domain.Address;
 import org.springframework.data.orient.object.domain.Employee;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.orientechnologies.orient.object.db.OObjectDatabaseTx;
+
 @Configuration
 @EnableTransactionManagement
-@TransactionConfiguration
 @ContextConfiguration(classes = OrientDbObjectTestConfiguration.class)
 public class OrientOperationUtilTest extends AbstractTestNGSpringContextTests {
 

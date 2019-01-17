@@ -1,5 +1,16 @@
 package org.springframework.data.orient.commons.core;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
+
+import org.springframework.data.orient.commons.repository.DetachMode;
+
 import com.orientechnologies.orient.core.cache.OLocalRecordCache;
 import com.orientechnologies.orient.core.command.OCommandOutputListener;
 import com.orientechnologies.orient.core.command.OCommandRequest;
@@ -21,14 +32,6 @@ import com.orientechnologies.orient.core.storage.ORecordCallback;
 import com.orientechnologies.orient.core.storage.ORecordMetadata;
 import com.orientechnologies.orient.core.storage.OStorage;
 import com.orientechnologies.orient.core.tx.OTransaction;
-import com.orientechnologies.orient.core.version.ORecordVersion;
-import org.springframework.data.orient.commons.repository.DetachMode;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.*;
-import java.util.concurrent.Callable;
 
 public interface OrientOperations<T> {
 
@@ -141,7 +144,7 @@ public interface OrientOperations<T> {
     
     <S extends T> S save(S entity, String cluster);
 
-    <S extends T> S save(S entity, ODatabase.OPERATION_MODE mode, boolean forceCreate, ORecordCallback<? extends Number> recordCallback, ORecordCallback<ORecordVersion> recordUpdatedCallback);
+    <S extends T> S save(S entity, ODatabase.OPERATION_MODE mode, boolean forceCreate, ORecordCallback<? extends Number> recordCallback, ORecordCallback<Integer> recordUpdatedCallback);
 
     long countClass(String className);
 
@@ -169,7 +172,7 @@ public interface OrientOperations<T> {
 
     ODatabase<T> delete(T entity);
 
-    ODatabase<T> delete(ORID rid, ORecordVersion version);
+    ODatabase<T> delete(ORID rid, int version);
 
     int getDefaultClusterId();
 

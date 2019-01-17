@@ -1,7 +1,13 @@
 package org.springframework.data.orient.object.repository;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
+
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.orient.object.OrientDbObjectTestConfiguration;
@@ -14,24 +20,18 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.util.List;
-
-import static org.testng.Assert.*;
-
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-@TransactionConfiguration(defaultRollback = true)
+//@TransactionConfiguration(defaultRollback = true)
 @TestExecutionListeners(
         inheritListeners = false,
         listeners = {DependencyInjectionTestExecutionListener.class})
 @ContextConfiguration(classes = OrientDbObjectTestConfiguration.class)
 @Transactional
 public class PersonRepositoryTest extends AbstractTestNGSpringContextTests {
-    private static final Logger logger = LoggerFactory.getLogger(PersonRepositoryTest.class);
 
     @Autowired
     PersonRepository repository;
@@ -66,10 +66,13 @@ public class PersonRepositoryTest extends AbstractTestNGSpringContextTests {
         
         String rid = repository.save(person).getRid();
         
-        Person result = repository.findOne(rid);
+        Optional<Person> result = repository.findById(rid);
         
-        assertEquals(result.getFirstName(), person.getFirstName());
-        assertEquals(result.getLastName(), person.getLastName());
+        assertEquals(result.isPresent(), true);
+        if(result.isPresent()) {
+        	assertEquals(result.get().getFirstName(), person.getFirstName());
+        	assertEquals(result.get().getLastName(), person.getLastName());
+        }
     }
 
     @Test
@@ -84,7 +87,7 @@ public class PersonRepositoryTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void findByFirstNamePage() {
-        for (Person person : repository.findByFirstName("Dzmitry", new PageRequest(1, 5)).getContent()) {
+        for (Person person : repository.findByFirstName("Dzmitry", PageRequest.of(1, 5)).getContent()) {
             assertEquals(person.getFirstName(), "Dzmitry");
         }
     }

@@ -14,6 +14,9 @@ public interface OrientDatabaseFactory<T> {
 
     /** Default maximum pool size. */
     public static final int DEFAULT_MAX_POOL_SIZE = 20;
+    
+    /** Default maximum pool size. */
+    public static final int DEFAULT_MAX_PARTITION_SIZE = 5;
 
     public ODatabase<T> db();
 

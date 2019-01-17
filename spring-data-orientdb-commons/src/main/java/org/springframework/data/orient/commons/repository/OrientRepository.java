@@ -94,7 +94,7 @@ public interface OrientRepository<T> extends PagingAndSortingRepository<T, Strin
      * @see org.springframework.data.repository.CrudRepository#findAll(java.lang.Iterable)
      */
     @Override
-    List<T> findAll(Iterable<String> ids);
+    List<T> findAllById(Iterable<String> ids);
     
     /**
      * Deletes all entities managed by the repository for the given cluster.

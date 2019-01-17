@@ -1,6 +1,20 @@
 package org.springframework.data.orient.commons.core;
 
-import com.orientechnologies.common.exception.OException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.Callable;
+
+import org.springframework.data.orient.commons.repository.DetachMode;
+
+import com.orientechnologies.common.exception.OSystemException;
 import com.orientechnologies.orient.core.cache.OLocalRecordCache;
 import com.orientechnologies.orient.core.command.OCommandOutputListener;
 import com.orientechnologies.orient.core.command.OCommandRequest;
@@ -26,14 +40,6 @@ import com.orientechnologies.orient.core.storage.ORecordCallback;
 import com.orientechnologies.orient.core.storage.ORecordMetadata;
 import com.orientechnologies.orient.core.storage.OStorage;
 import com.orientechnologies.orient.core.tx.OTransaction;
-import com.orientechnologies.orient.core.version.ORecordVersion;
-import org.springframework.data.orient.commons.repository.DetachMode;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.*;
-import java.util.concurrent.Callable;
 
 public abstract class AbstractOrientOperations<T> implements OrientOperations<T> {
     //private static final Logger logger = LoggerFactory.getLogger(AbstractOrientOperations.class);
@@ -118,7 +124,8 @@ public abstract class AbstractOrientOperations<T> implements OrientOperations<T>
 
     @Override
     public ORecordHook.RESULT callbackHooks(ORecordHook.TYPE type, OIdentifiable id) {
-        return dbf.db().callbackHooks(type, id);
+    	throw new UnsupportedOperationException("not supported");
+    	//return dbf.db().callbackHooks(type, id);
     }
 
     @Override
@@ -337,7 +344,7 @@ public abstract class AbstractOrientOperations<T> implements OrientOperations<T>
     }
 
     @Override
-    public <S extends T> S save(S entity, ODatabase.OPERATION_MODE mode, boolean forceCreate, ORecordCallback<? extends Number> recordCallback, ORecordCallback<ORecordVersion> recordUpdatedCallback) {
+    public <S extends T> S save(S entity, ODatabase.OPERATION_MODE mode, boolean forceCreate, ORecordCallback<? extends Number> recordCallback, ORecordCallback<Integer> recordUpdatedCallback) {
         return dbf.db().save(entity, mode, forceCreate, recordCallback, recordUpdatedCallback);
     }
 
@@ -405,7 +412,7 @@ public abstract class AbstractOrientOperations<T> implements OrientOperations<T>
             }
         }
 
-        throw new OException("Cluster " + clusterName + " not found");
+        throw new OSystemException("Cluster " + clusterName + " not found");
     }
 
     @Override
@@ -465,17 +472,20 @@ public abstract class AbstractOrientOperations<T> implements OrientOperations<T>
 
     @Override
     public void freezeCluster(int iClusterId, boolean throwException) {
-        dbf.db().freezeCluster(iClusterId, throwException);
+    	throw new UnsupportedOperationException("not supported");
+    	//dbf.db().freezeCluster(iClusterId, throwException);
     }
 
     @Override
     public void freezeCluster(int iClusterId) {
-        dbf.db().freezeCluster(iClusterId);
+    	throw new UnsupportedOperationException("not supported");
+    	//dbf.db().freezeCluster(iClusterId);
     }
 
     @Override
     public void releaseCluster(int iClusterId) {
-        dbf.db().releaseCluster(iClusterId);
+    	throw new UnsupportedOperationException("not supported");
+        //dbf.db().releaseCluster(iClusterId);
     }
 
     @Override
@@ -489,7 +499,7 @@ public abstract class AbstractOrientOperations<T> implements OrientOperations<T>
     }
 
     @Override
-    public ODatabase<T> delete(ORID rid, ORecordVersion version) {
+    public ODatabase<T> delete(ORID rid, int version) {
         return dbf.db().delete(rid, version);
     }
 
@@ -525,7 +535,8 @@ public abstract class AbstractOrientOperations<T> implements OrientOperations<T>
 
     @Override
     public void setUser(OUser user) {
-        dbf.db().setUser(user);
+    	throw new UnsupportedOperationException("not supported");
+    	//dbf.db().setUser(user);
     }
 
     @Override

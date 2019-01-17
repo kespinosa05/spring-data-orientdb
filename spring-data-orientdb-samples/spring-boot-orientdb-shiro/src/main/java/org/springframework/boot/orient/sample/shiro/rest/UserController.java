@@ -12,6 +12,12 @@
  */
 package org.springframework.boot.orient.sample.shiro.rest;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+
+import java.util.List;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.DefaultPasswordService;
@@ -30,10 +36,6 @@ import org.springframework.boot.orient.sample.shiro.repository.UserRepository;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-
-import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 /**
  * TODO add description

@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Default implementation of the {@link org.springframework.data.repository.PagingAndSortingRepository} interface for OrientDB.
@@ -183,7 +184,7 @@ public class SimpleOrientRepository<T> implements OrientRepository<T> {
      * @see org.springframework.data.orient.repository.OrientRepository#findAll(java.lang.Iterable)
      */
     @Override
-    public List<T> findAll(Iterable<String> ids) {
+    public List<T> findAllById(Iterable<String> ids) {
         List<ORecordId> oRecordIds = new ArrayList<>();
         for (String id : ids) {
             ORecordId oRecordId = new ORecordId();
@@ -356,8 +357,48 @@ public class SimpleOrientRepository<T> implements OrientRepository<T> {
         
         Sort sort = pageable.getSort();
         SelectLimitStep<? extends Record> limitStep = sort == null ? joinStep : joinStep.orderBy(QueryUtils.toOrders(sort));
-        Query query = pageable == null ? limitStep : limitStep.limit(pageable.getPageSize()).offset(pageable.getOffset());
+        Query query = pageable == null ? limitStep : limitStep.limit(pageable.getPageSize()).offset(Math.toIntExact(pageable.getOffset()));
         
         return new OSQLSynchQuery<>(query.getSQL(ParamType.INLINED));
     }
+
+    @Transactional(readOnly = false)
+	@Override
+	public <S extends T> Iterable<S> saveAll(Iterable<S> entities) {
+		if (entities == null) {
+            return Collections.emptyList();
+        }
+
+        List<S> result = new ArrayList<>();
+
+        for (S entity : entities) {
+            result.add(save(entity));
+        }
+
+        return result;
+	}
+
+	@Override
+	public Optional<T> findById(String id) {
+		return Optional.ofNullable(operations.load(new ORecordId(id)));
+	}
+
+	@Override
+	public boolean existsById(String id) {
+		return findById(id).isPresent();
+	}
+
+	@Transactional(readOnly = false)
+	@Override
+	public void deleteById(String id) {
+		operations.delete(new ORecordId(id));
+	}
+
+	@Transactional(readOnly = false)
+	@Override
+	public void deleteAll(Iterable<? extends T> entities) {
+		for (T entity : entities) {
+            delete(entity);
+        }
+	}
 }

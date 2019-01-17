@@ -1,5 +1,8 @@
 package org.springframework.data.orient.commons.repository.support;
 
+import java.io.Serializable;
+import java.util.Optional;
+
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.data.orient.commons.core.OrientOperations;
 import org.springframework.data.orient.commons.repository.SourceType;
@@ -12,8 +15,8 @@ import org.springframework.data.repository.core.RepositoryMetadata;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
 import org.springframework.data.repository.query.QueryLookupStrategy;
 import org.springframework.data.repository.query.QueryLookupStrategy.Key;
-
-import java.io.Serializable;
+import org.springframework.data.repository.query.QueryMethodEvaluationContextProvider;
+import org.springframework.lang.Nullable;
 
 /**
  * Orient specific generic repository factory.
@@ -42,7 +45,7 @@ public class OrientRepositoryFactory extends RepositoryFactorySupport {
      */
     @Override
     @SuppressWarnings("unchecked")
-    public <T, ID extends Serializable> EntityInformation<T, ID> getEntityInformation(Class<T> domainClass) {
+    public <T, ID> EntityInformation<T, ID> getEntityInformation(Class<T> domainClass){
         return (EntityInformation<T, ID>) new OrientMetamodelEntityInformation<>(domainClass);
     }
 
@@ -73,9 +76,11 @@ public class OrientRepositoryFactory extends RepositoryFactorySupport {
      * @see org.springframework.data.repository.core.support.RepositoryFactorySupport#getQueryLookupStrategy(org.springframework.data.repository.query.QueryLookupStrategy.Key)
      */
     @Override
-    protected QueryLookupStrategy getQueryLookupStrategy(Key key) {
-        return OrientQueryLookupStrategy.create(operations, key);
-    }
+	protected Optional<QueryLookupStrategy> getQueryLookupStrategy(@Nullable Key key,
+			QueryMethodEvaluationContextProvider evaluationContextProvider) {
+    	QueryLookupStrategy orientQueryLookupStrategy = new OrientQueryLookupStrategy(operations, evaluationContextProvider);
+		return Optional.of(orientQueryLookupStrategy);
+	}
 
     /**
      * Get Custom Cluster Name.
@@ -103,4 +108,6 @@ public class OrientRepositoryFactory extends RepositoryFactorySupport {
         }
         return null;
     }
+
+	
 }

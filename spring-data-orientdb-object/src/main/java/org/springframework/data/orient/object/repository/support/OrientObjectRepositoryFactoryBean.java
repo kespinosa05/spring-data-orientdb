@@ -21,7 +21,11 @@ import java.io.Serializable;
  */
 public class OrientObjectRepositoryFactoryBean<T extends Repository<S, ID>, S, ID extends Serializable> extends TransactionalRepositoryFactoryBeanSupport<T, S, ID> {
 
-    /** The orient operations. */
+    protected OrientObjectRepositoryFactoryBean(Class<? extends T> repositoryInterface) {
+		super(repositoryInterface);
+	}
+
+	/** The orient operations. */
     @Autowired
     private OrientObjectOperations operations;
 

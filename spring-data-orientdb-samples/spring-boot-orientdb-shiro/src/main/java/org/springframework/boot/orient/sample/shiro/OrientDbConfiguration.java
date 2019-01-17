@@ -12,14 +12,14 @@
  */
 package org.springframework.boot.orient.sample.shiro;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.orient.commons.repository.config.EnableOrientRepositories;
 import org.springframework.data.orient.object.OrientObjectDatabaseFactory;
 import org.springframework.data.orient.object.repository.support.OrientObjectRepositoryFactoryBean;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.annotation.PostConstruct;
 
 @Configuration
 @EnableOrientRepositories(basePackages = "org.springframework.boot.orient.sample.shiro.repository", repositoryFactoryBeanClass = OrientObjectRepositoryFactoryBean.class)

@@ -1,10 +1,13 @@
 package org.springframework.data.orient.object.repository.cluster;
 
-import com.orientechnologies.orient.core.id.ORecordId;
-import com.orientechnologies.orient.core.metadata.schema.OClass;
-import com.orientechnologies.orient.object.db.OObjectDatabaseTx;
+import static org.springframework.data.orient.object.OrientDbObjectTestConfiguration.EMPLOYEE_TMP_CLUSTER;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +21,16 @@ import org.springframework.data.orient.object.domain.Employee;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static org.springframework.data.orient.object.OrientDbObjectTestConfiguration.EMPLOYEE_TMP_CLUSTER;
-import org.testng.Assert;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
+import com.orientechnologies.orient.core.id.ORecordId;
+import com.orientechnologies.orient.core.metadata.schema.OClass;
+import com.orientechnologies.orient.object.db.OObjectDatabaseTx;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-@TransactionConfiguration(defaultRollback = false)
 @ContextConfiguration(classes = OrientDbObjectTestConfiguration.class)
 @Transactional
 public class EmployeeClusteredRepositoryTest extends AbstractTestNGSpringContextTests {
@@ -151,7 +152,7 @@ public class EmployeeClusteredRepositoryTest extends AbstractTestNGSpringContext
         List<Employee> results1 = repository.queryByRidIn(oRecordIds);
         Assert.assertFalse(results1.isEmpty());
 
-        List<Employee> results2 = repository.findAll(ids);
+        List<Employee> results2 = repository.findAllById(ids);
         Assert.assertFalse(results2.isEmpty());
 
     }
@@ -169,10 +170,11 @@ public class EmployeeClusteredRepositoryTest extends AbstractTestNGSpringContext
 
         String rid = tmpRepository.save(employee).getRid();
 
-        Employee result = tmpRepository.findOne(rid);
-
-        assertEquals(result.getFirstName(), employee.getFirstName());
-        assertEquals(result.getLastName(), employee.getLastName());
+        Optional<Employee> result = tmpRepository.findById(rid);
+        assertEquals(result.isPresent(),true);
+        
+        assertEquals(result.get().getFirstName(), employee.getFirstName());
+        assertEquals(result.get().getLastName(), employee.getLastName());
     }
 
     @Test

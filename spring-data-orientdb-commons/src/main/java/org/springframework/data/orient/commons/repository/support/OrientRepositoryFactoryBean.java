@@ -1,12 +1,12 @@
 package org.springframework.data.orient.commons.repository.support;
 
+import java.io.Serializable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.orient.commons.core.OrientOperations;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
 import org.springframework.data.repository.core.support.TransactionalRepositoryFactoryBeanSupport;
-
-import java.io.Serializable;
 
 /**
  * Special adapter for Springs {@link org.springframework.beans.factory.FactoryBean} interface to allow easy setup of
@@ -20,9 +20,13 @@ import java.io.Serializable;
  */
 public class OrientRepositoryFactoryBean<T extends Repository<S, ID>, S, ID extends Serializable> extends TransactionalRepositoryFactoryBeanSupport<T, S, ID> {
 
-    /** The orient operations. */
+    protected OrientRepositoryFactoryBean(Class<? extends T> repositoryInterface) {
+		super(repositoryInterface);
+	}
+
+	/** The orient operations. */
     @Autowired
-    private OrientOperations operations;
+    private OrientOperations<T> operations;
 
     /* (non-Javadoc)
      * @see org.springframework.data.repository.core.support.TransactionalRepositoryFactoryBeanSupport#doCreateRepositoryFactory()

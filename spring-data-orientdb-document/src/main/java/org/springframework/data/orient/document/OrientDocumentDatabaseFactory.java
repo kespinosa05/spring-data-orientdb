@@ -21,7 +21,7 @@ public class OrientDocumentDatabaseFactory extends AbstractOrientDatabaseFactory
 
     @Override
     protected void createPool() {
-        pool = new OPartitionedDatabasePool(getUrl(), getUsername(), getPassword(), maxPoolSize);
+        pool = new OPartitionedDatabasePool(getUrl(), getUsername(), getPassword(),maxPartitionSize, maxPoolSize);
     }
 
     /* (non-Javadoc)

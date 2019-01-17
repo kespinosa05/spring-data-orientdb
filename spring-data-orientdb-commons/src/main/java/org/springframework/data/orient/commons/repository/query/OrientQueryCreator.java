@@ -204,7 +204,7 @@ public class OrientQueryCreator extends AbstractQueryCreator<String, Condition> 
         } else if (sort == null) {
             return limitStep.limit(pageable.getPageSize());
         } else {
-            return limitStep.limit(pageable.getPageSize()).offset(pageable.getOffset());
+            return limitStep.limit(pageable.getPageSize()).offset(Math.toIntExact(pageable.getOffset()));
         }
     }
     
