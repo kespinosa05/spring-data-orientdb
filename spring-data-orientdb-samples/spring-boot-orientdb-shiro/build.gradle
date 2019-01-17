@@ -13,6 +13,8 @@ dependencies {
 		exclude(module: 'junit')
 		exclude(module: 'mockito-core')
     }
+    testCompile 'org.sonatype.nexus:nexus-pax-logging:3.15.0-01'
     testCompile group: 'org.springframework.boot', name: 'spring-boot-test', version:'2.1.2.RELEASE'
     compileOnly group: 'org.apache.shiro', name: 'shiro-aspectj', version:'1.2.4'
+    
 }
