@@ -1,0 +1,18 @@
+rootProject.name = 'spring-data-orientdb-parent'
+include ':spring-data-orientdb-commons'
+include ':spring-data-orientdb-document'
+include ':spring-data-orientdb-object'
+include ':spring-data-orientdb-graph'
+include ':spring-boot-orientdb-autoconfigure'
+include ':spring-data-orientdb-benchmarks'
+include ':spring-boot-orientdb-hello'
+include ':spring-boot-orientdb-shiro'
+
+project(':spring-data-orientdb-commons').projectDir = "$rootDir/spring-data-orientdb-commons" as File
+project(':spring-data-orientdb-document').projectDir = "$rootDir/spring-data-orientdb-document" as File
+project(':spring-data-orientdb-object').projectDir = "$rootDir/spring-data-orientdb-object" as File
+project(':spring-data-orientdb-graph').projectDir = "$rootDir/spring-data-orientdb-graph" as File
+project(':spring-boot-orientdb-autoconfigure').projectDir = "$rootDir/spring-boot-orientdb-autoconfigure" as File
+project(':spring-data-orientdb-benchmarks').projectDir = "$rootDir/spring-data-orientdb-benchmarks" as File
+project(':spring-boot-orientdb-hello').projectDir = "$rootDir/spring-data-orientdb-samples/spring-boot-orientdb-hello" as File
+project(':spring-boot-orientdb-shiro').projectDir = "$rootDir/spring-data-orientdb-samples/spring-boot-orientdb-shiro" as File

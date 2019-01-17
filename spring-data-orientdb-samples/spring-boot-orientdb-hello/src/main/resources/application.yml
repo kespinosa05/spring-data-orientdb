@@ -1,0 +1,18 @@
+logging:
+  level:
+    ec.com.kruger.orientdb: debug
+---
+server:
+  port: 8780
+  servlet:
+    context-path: /orientServices
+---
+spring:
+  main.allow-bean-definition-overriding: true
+---
+spring:
+  data:
+    orient:
+      url: remote:10.200.101.223:2424/inventory
+      username: root
+      password: root

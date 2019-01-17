@@ -27,7 +27,6 @@ public class OrientAutoConfiguration {
     private OrientProperties properties;
     
     @Bean
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @ConditionalOnMissingBean(PlatformTransactionManager.class)
     public PlatformTransactionManager transactionManager(OrientDatabaseFactory factory) {
         return new OrientTransactionManager(factory);
@@ -45,7 +44,7 @@ public class OrientAutoConfiguration {
 
     @Bean
     @ConditionalOnClass(OObjectDatabaseTx.class)
-    @ConditionalOnMissingBean(OrientObjectOperations.class)
+    @ConditionalOnMissingBean(OrientObjectTemplate.class)
     public OrientObjectTemplate objectTemplate(OrientObjectDatabaseFactory factory) {
         return new OrientObjectTemplate(factory);
     }

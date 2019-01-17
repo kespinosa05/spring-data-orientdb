@@ -1,0 +1,6 @@
+
+description = 'Spring Data OrientDB Object'
+dependencies {
+  	compile project(':spring-data-orientdb-commons')
+    compile group: 'com.orientechnologies', name: 'orientdb-object', version:'3.0.13'
+}

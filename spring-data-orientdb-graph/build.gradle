@@ -1,0 +1,9 @@
+
+description = 'Spring Data OrientDB Graph'
+dependencies {
+  	compile project(':spring-data-orientdb-commons')
+    compile(group: 'com.orientechnologies', name: 'orientdb-graphdb', version:'3.0.13') {
+		exclude(module: 'commons-logging')
+		exclude(module: 'jackson-databind')
+    }
+}

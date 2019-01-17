@@ -1,0 +1,18 @@
+group = 'org.springframework.boot.samples'
+description = 'Sample - Spring Boot OrientDB Shiro'
+dependencies {
+  	compile project(':spring-boot-orientdb-autoconfigure')
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'2.1.2.RELEASE') {
+		exclude(module: 'hibernate-validator')
+    }
+    compile(group: 'org.apache.shiro', name: 'shiro-spring', version:'1.2.4') {
+		exclude(module: 'commons-collections')
+    }
+    compile group: 'com.hazelcast', name: 'hazelcast', version:'3.3.5'
+    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:'2.1.2.RELEASE') {
+		exclude(module: 'junit')
+		exclude(module: 'mockito-core')
+    }
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-test', version:'2.1.2.RELEASE'
+    compileOnly group: 'org.apache.shiro', name: 'shiro-aspectj', version:'1.2.4'
+}

@@ -1,0 +1,19 @@
+group = 'org.springframework.boot.samples'
+description = 'Sample - Spring Boot OrientDB Hello'
+dependencies {
+    compile project(':spring-boot-orientdb-autoconfigure')
+    
+    compile('org.projectlombok:lombok:1.18.2');
+    compile('org.aspectj:aspectjrt:1.9.2');
+    compile('org.aspectj:aspectjweaver:1.9.2');
+    
+    
+    
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'2.1.2.RELEASE') {
+		exclude(module: 'hibernate-validator')
+    }
+    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:'2.1.2.RELEASE') {
+		exclude(module: 'junit')
+		exclude(module: 'mockito-core')
+    }
+}

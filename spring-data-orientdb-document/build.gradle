@@ -1,0 +1,5 @@
+
+description = 'Spring Data OrientDB Document'
+dependencies {
+  compile project(':spring-data-orientdb-commons')
+}

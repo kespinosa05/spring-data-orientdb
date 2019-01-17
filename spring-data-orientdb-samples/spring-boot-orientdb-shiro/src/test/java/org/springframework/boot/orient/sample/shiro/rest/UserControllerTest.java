@@ -41,14 +41,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@WebAppConfiguration
 @SpringBootTest(classes = { Application.class, OrientDbConfiguration.class,
 		ShiroConfiguration.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestExecutionListeners(inheritListeners = false, listeners = { DependencyInjectionTestExecutionListener.class })

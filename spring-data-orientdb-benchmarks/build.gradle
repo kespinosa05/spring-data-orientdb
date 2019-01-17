@@ -1,0 +1,6 @@
+
+description = 'Spring Boot OrientDB Benchmarks'
+dependencies {
+    compile group: 'org.openjdk.jmh', name: 'jmh-core', version:'1.4.1'
+    compileOnly group: 'org.openjdk.jmh', name: 'jmh-generator-annprocess', version:'1.4.1'
+}

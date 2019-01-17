@@ -1,0 +1,9 @@
+group = 'org.springframework.boot'
+description = 'Spring Boot OrientDB'
+dependencies {
+    compile project(':spring-data-orientdb-document')
+    compile project(':spring-data-orientdb-object')
+    compile project(':spring-data-orientdb-graph')
+    compile group: 'org.springframework.boot', name: 'spring-boot', version:'2.1.2.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version:'2.1.2.RELEASE'
+}
