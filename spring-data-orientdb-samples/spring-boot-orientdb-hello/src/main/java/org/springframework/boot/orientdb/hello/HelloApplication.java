@@ -1,8 +1,7 @@
 package org.springframework.boot.orientdb.hello;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Date;
 
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +12,12 @@ import org.springframework.boot.orientdb.hello.data.Person;
 import org.springframework.boot.orientdb.hello.repository.PersonRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.orient.object.OrientObjectDatabaseFactory;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import com.orientechnologies.orient.object.db.OObjectDatabaseTx;
 
 import lombok.extern.slf4j.Slf4j;
+
 
 @Slf4j
 @SpringBootApplication(scanBasePackages =  {"org.springframework.boot.orientdb.hello"} )
@@ -27,6 +28,9 @@ public class HelloApplication implements CommandLineRunner {
 
     @Autowired
     private OrientObjectDatabaseFactory factory;
+    
+    @Autowired
+    private ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
     public static void main(String[] args) {
         SpringApplication.run(HelloApplication.class, args);
@@ -45,6 +49,25 @@ public class HelloApplication implements CommandLineRunner {
                 db.close();
             }
         }
+        
+        long initTime = new Date().getTime();
+		log.debug("Init Data generator:{}", initTime);
+        Integer i=1;
+        while(i<2000) {
+        	 final Integer b = i++;
+        	 threadPoolTaskExecutor.submit(() -> {
+        		 Person kaitlin = new Person();
+        		 kaitlin.setFirstName("Kaitlin"+b);
+        		 kaitlin.setLastName("Walter"+b);
+        		 kaitlin.setAge(22);
+        		 
+        		 repository.save(kaitlin);
+             });
+        }
+        
+        long endTime = new Date().getTime();
+		log.debug("End Data generator:{},Time:{}", endTime, endTime - initTime );
+        /*
         
         //Create Persons if required
         if (repository.count() < 1) {
@@ -87,6 +110,7 @@ public class HelloApplication implements CommandLineRunner {
             
             repository.saveAll(persons);
         }
+        */
     }
     
     /**

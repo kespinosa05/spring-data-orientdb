@@ -3,6 +3,7 @@ package org.springframework.data.orient.commons.repository.support;
 import java.io.Serializable;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.orient.commons.core.OrientOperations;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
@@ -26,7 +27,7 @@ public class OrientRepositoryFactoryBean<T extends Repository<S, ID>, S, ID exte
 
 	/** The orient operations. */
     @Autowired
-    private OrientOperations<T> operations;
+    private OrientOperations<?> operations;
 
     /* (non-Javadoc)
      * @see org.springframework.data.repository.core.support.TransactionalRepositoryFactoryBeanSupport#doCreateRepositoryFactory()

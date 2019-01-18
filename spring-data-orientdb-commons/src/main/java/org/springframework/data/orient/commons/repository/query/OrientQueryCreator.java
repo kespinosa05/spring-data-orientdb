@@ -199,7 +199,7 @@ public class OrientQueryCreator extends AbstractQueryCreator<String, Condition> 
     }
     
     private Query limitIfPageable(SelectLimitStep<? extends Record> limitStep, Pageable pageable, Sort sort) {
-        if (pageable == null || isCountQuery()) {
+        if (pageable == null || !pageable.isPaged() || isCountQuery()) {
             return limitStep;
         } else if (sort == null) {
             return limitStep.limit(pageable.getPageSize());

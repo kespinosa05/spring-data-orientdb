@@ -6,4 +6,9 @@ dependencies {
     compile project(':spring-data-orientdb-graph')
     compile group: 'org.springframework.boot', name: 'spring-boot', version:'2.1.2.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version:'2.1.2.RELEASE'
+    
+    compileOnly "org.springframework.boot:spring-boot-configuration-processor:2.1.2.RELEASE"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:2.1.2.RELEASE"
 }
+
+compileJava.dependsOn(processResources)

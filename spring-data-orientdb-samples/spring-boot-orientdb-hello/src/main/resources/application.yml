@@ -11,6 +11,9 @@ spring:
   main.allow-bean-definition-overriding: true
 ---
 spring:
+  thread:
+    maxPoolSize: 8
+    corePoolSize: 4
   data:
     orient:
       url: remote:10.200.101.223:2424/inventory

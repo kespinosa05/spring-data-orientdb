@@ -2,7 +2,10 @@ package org.springframework.boot.orientdb.hello;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.orient.OrientProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.orientdb.hello.data.Person;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,32 +21,35 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableOrientRepositories(basePackages = "org.springframework.boot.orientdb.hello.repository")
 @EnableAutoConfiguration
 @EnableAspectJAutoProxy(proxyTargetClass = true)
+@EnableConfigurationProperties(OrientProperties.class)
 public class HelloConfiguration {
 
-    @Bean
-    public OrientObjectDatabaseFactory factory() {
-        OrientObjectDatabaseFactory factory =  new OrientObjectDatabaseFactory();
+	@Autowired
+	private OrientProperties properties;
 
-        factory.setUrl("remote:10.200.101.223:2424/inventory");
-        factory.setUsername("root");
-        factory.setPassword("root");
+	@Bean
+	public OrientObjectDatabaseFactory factory() {
+		OrientObjectDatabaseFactory factory = new OrientObjectDatabaseFactory();
 
-        return factory;
-    }
+		factory.setUrl(properties.getUrl());
+		factory.setUsername(properties.getUsername());
+		factory.setPassword(properties.getPassword());
 
-    @Bean
-    public OrientTransactionManager transactionManager() {
-        return new OrientTransactionManager(factory());
-    }
+		return factory;
+	}
 
-    @Bean
-    public OrientObjectTemplate objectTemplate() {
-        return new OrientObjectTemplate(factory());
-    }
+	@Bean
+	public OrientTransactionManager transactionManager() {
+		return new OrientTransactionManager(factory());
+	}
 
+	@Bean
+	public OrientObjectTemplate objectTemplate() {
+		return new OrientObjectTemplate(factory());
+	}
 
-    @PostConstruct
-    public void registerEntities() {
-        factory().db().getEntityManager().registerEntityClass(Person.class);
-    }
+	@PostConstruct
+	public void registerEntities() {
+		factory().db().getEntityManager().registerEntityClass(Person.class);
+	}
 }

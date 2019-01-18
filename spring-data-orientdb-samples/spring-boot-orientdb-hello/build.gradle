@@ -1,11 +1,22 @@
+apply from: "http://proyectos:7990/projects/GP/repos/maven-scripts/browse/querydsl.gradle?raw"
+
 group = 'org.springframework.boot.samples'
 description = 'Sample - Spring Boot OrientDB Hello'
 dependencies {
     compile project(':spring-boot-orientdb-autoconfigure')
     
-    compile('org.projectlombok:lombok:1.18.2');
-    compile('org.aspectj:aspectjrt:1.9.2');
-    compile('org.aspectj:aspectjweaver:1.9.2');
+    compile('org.projectlombok:lombok:1.18.2')
+    compile('org.aspectj:aspectjrt:1.9.2')
+    compile('org.aspectj:aspectjweaver:1.9.2')
+    
+    compile('com.querydsl:querydsl-apt:4.2.1')
+    compile('com.querydsl:querydsl-core:4.2.1')
+    compile('com.querydsl:querydsl-sql:4.2.1')
+    compile('com.querydsl:querydsl-sql-spring:4.2.1')
+    
+    compile('joda-time:joda-time:2.10.1')
+    
+    compile('org.hibernate.validator:hibernate-validator:6.0.13.Final')
     
     
     

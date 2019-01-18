@@ -6,7 +6,9 @@ import org.springframework.boot.orientdb.hello.data.Person;
 import org.springframework.data.orient.commons.repository.annotation.Query;
 import org.springframework.data.orient.object.repository.OrientObjectRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import org.springframework.stereotype.Repository;
 
+@Repository("generatedPersonRepository")
 public interface IPersonRepository  extends OrientObjectRepository<Person>,QuerydslPredicateExecutor<Person>   {
     
 	List<Person> findByFirstName(String firstName);

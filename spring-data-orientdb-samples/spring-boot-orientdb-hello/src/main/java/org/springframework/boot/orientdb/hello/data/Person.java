@@ -2,10 +2,13 @@ package org.springframework.boot.orientdb.hello.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.querydsl.core.annotations.QueryEntity;
+
 import javax.persistence.Id;
 import javax.persistence.Version;
 
 @JsonIgnoreProperties(value = {"handler"})
+@QueryEntity
 public class Person {
 
     @Id
@@ -20,6 +23,13 @@ public class Person {
      * for existence but not actually used.
      */
     private String detachAll;
+    private String exists;
+    private String count;
+    private String findOne;
+    private String findAll;
+    
+    
+    
     
     private String firstName;
     
