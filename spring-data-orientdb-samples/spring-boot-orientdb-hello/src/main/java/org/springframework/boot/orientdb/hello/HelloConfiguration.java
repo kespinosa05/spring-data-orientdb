@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@EnableOrientRepositories(basePackages = "org.springframework.boot.orientdb.hello.data")
+@EnableOrientRepositories(basePackages = "org.springframework.boot.orientdb.hello.repository")
 @EnableAutoConfiguration
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class HelloConfiguration {

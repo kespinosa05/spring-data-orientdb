@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.orientdb.hello.data.Person;
+import org.springframework.boot.orientdb.hello.repository.IPersonRepository;
 import org.springframework.boot.orientdb.hello.repository.PersonRepository;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/persons")
 public class PersonController {
 
-    @Autowired()
+    @Autowired
     private PersonRepository repository;
+    @Autowired
+    private IPersonRepository iRepository;
     
     @RequestMapping(method = RequestMethod.GET)
     public List<Person> findAllPersons() {
@@ -23,7 +26,7 @@ public class PersonController {
     
     @RequestMapping("/findAll")
     public List<Person> findAll() {
-        return repository.findAll();
+        return iRepository.findAll();
     }
     
     /*

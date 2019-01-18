@@ -1,6 +1,6 @@
 logging:
   level:
-    ec.com.kruger.orientdb: debug
+    org.springframework.boot.orientdb.hello: debug
 ---
 server:
   port: 8780
