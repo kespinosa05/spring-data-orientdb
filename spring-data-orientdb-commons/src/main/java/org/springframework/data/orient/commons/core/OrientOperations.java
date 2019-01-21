@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import org.springframework.data.orient.commons.core.convert.OrientConverter;
 import org.springframework.data.orient.commons.repository.DetachMode;
 
 import com.orientechnologies.orient.core.cache.OLocalRecordCache;
@@ -258,4 +259,11 @@ public interface OrientOperations<T> {
     <RET> RET command(OCommandSQL command, Object... args);
     
     <RET> RET command(String sql, Object... args);
+    
+    /**
+	 * Returns the underlying {@link MongoConverter}.
+	 *
+	 * @return
+	 */
+	OrientConverter getConverter();
 }

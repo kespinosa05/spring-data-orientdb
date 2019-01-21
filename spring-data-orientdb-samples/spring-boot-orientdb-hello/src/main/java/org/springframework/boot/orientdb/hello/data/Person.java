@@ -1,11 +1,13 @@
 package org.springframework.boot.orientdb.hello.data;
 
+import javax.persistence.Id;
+import javax.persistence.Version;
+
+import org.springframework.data.orient.commons.core.mapping.Field;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.querydsl.core.annotations.QueryEntity;
-
-import javax.persistence.Id;
-import javax.persistence.Version;
 
 @JsonIgnoreProperties(value = {"handler"})
 @QueryEntity
@@ -29,12 +31,13 @@ public class Person {
     private String findAll;
     
     
-    
-    
+    @Field
     private String firstName;
     
+    @Field
     private String lastName;
     
+    @Field
     private Integer age;
 
     public String getId() {

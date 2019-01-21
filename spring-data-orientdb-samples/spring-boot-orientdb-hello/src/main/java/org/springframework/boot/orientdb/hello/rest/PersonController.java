@@ -34,7 +34,7 @@ public class PersonController {
                 .collect(Collectors.toList());
     }
     
-    
+    /*
     @RequestMapping("/findByFirstName")
     public List<Person> findByFirstName(@RequestParam String firstName) {
         return iRepository.findByFirstName(firstName);
@@ -49,5 +49,5 @@ public class PersonController {
     public List<Person> findByAge(@RequestParam Integer age) {
         return iRepository.findByAge(age);
     }
-    
+     */   
 }

@@ -1,9 +1,11 @@
 package org.springframework.data.orient.commons.repository.query;
 
+import static org.springframework.data.querydsl.QuerydslUtils.QUERY_DSL_PRESENT;
 import java.lang.reflect.Method;
 
 import org.springframework.data.orient.commons.core.OrientOperations;
 import org.springframework.data.projection.ProjectionFactory;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.core.NamedQueries;
 import org.springframework.data.repository.core.RepositoryMetadata;
 import org.springframework.data.repository.query.QueryLookupStrategy;
@@ -182,15 +184,14 @@ public final class OrientQueryLookupStrategy implements QueryLookupStrategy {
 			NamedQueries namedQueries) {
 		OrientQueryMethod queryMethod = new OrientQueryMethod(method, metadata, factory);
 		String namedQueryName = queryMethod.getNamedQueryName();
+		
+		boolean isQueryDslRepository = QUERY_DSL_PRESENT
+				&& QuerydslPredicateExecutor.class.isAssignableFrom(metadata.getRepositoryInterface());
 
-		/*//TODO: origin
-		 * String query = queryMethod.getAnnotatedQuery(); if (query != null) { return
-		 * new StringBasedOrientQuery(query, queryMethod, operations); }else { throw new
-		 * IllegalStateException(String.
-		 * format("Did neither find a NamedQuery nor an annotated query for method %s!",
-		 * method)); }
-		 */
-
+		if(isQueryDslRepository) {
+			
+		}
+		
 		if (namedQueries.hasQuery(namedQueryName)) {
 			String namedQuery = namedQueries.getQuery(namedQueryName);
 			return new StringBasedOrientQuery(namedQuery, queryMethod, operations, evaluationContextProvider);

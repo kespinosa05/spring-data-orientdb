@@ -11,4 +11,7 @@ dependencies {
     compile group: 'com.orientechnologies', name: 'orientdb-core', version:'3.0.13'
     compile group: 'com.orientechnologies', name: 'orientdb-client', version:'3.0.13'
     compile group: 'org.jooq', name: 'jooq', version:'3.11.9'
+    compile('com.querydsl:querydsl-core:4.2.1')
+    compile('javax.persistence:javax.persistence-api:2.2')
+    
 }

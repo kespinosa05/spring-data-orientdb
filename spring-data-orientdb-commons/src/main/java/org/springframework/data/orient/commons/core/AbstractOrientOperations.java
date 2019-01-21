@@ -12,6 +12,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
+import org.springframework.core.convert.ConversionService;
+import org.springframework.data.mapping.context.MappingContext;
+import org.springframework.data.orient.commons.core.convert.OrientConverter;
+import org.springframework.data.orient.commons.core.mapping.OrientMappingContext;
+import org.springframework.data.orient.commons.core.mapping.OrientPersistentEntity;
+import org.springframework.data.orient.commons.core.mapping.OrientPersistentProperty;
 import org.springframework.data.orient.commons.repository.DetachMode;
 
 import com.orientechnologies.common.exception.OSystemException;
@@ -48,8 +54,37 @@ public abstract class AbstractOrientOperations<T> implements OrientOperations<T>
 
     protected Set<String> defaultClusters;
 
+	protected OrientConverter orientConverter;
+
     protected AbstractOrientOperations(OrientDatabaseFactory<T> dbf) {
         this.dbf = dbf;
+        
+        this.orientConverter = new OrientConverter() {
+			
+			@Override
+			public void write(Object source, Object sink) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public <R> R read(Class<R> type, Object source) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public MappingContext<? extends OrientPersistentEntity<?>, OrientPersistentProperty> getMappingContext() {
+				// TODO Auto-generated method stub
+				return new OrientMappingContext();
+			}
+			
+			@Override
+			public ConversionService getConversionService() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
     }
 
     @Override
@@ -631,4 +666,8 @@ public abstract class AbstractOrientOperations<T> implements OrientOperations<T>
     public String toString() {
         return dbf.db().toString();
     }
+    
+	public OrientConverter getConverter() {
+		return this.orientConverter;
+	}
 }
