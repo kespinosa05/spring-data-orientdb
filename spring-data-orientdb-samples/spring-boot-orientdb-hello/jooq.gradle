@@ -1,0 +1,66 @@
+apply plugin: 'nu.studer.jooq'
+
+dependencies {
+    jooqRuntime("org.jooq:jooq:${jooqVersion}")
+    jooqRuntime("org.jooq:jooq-meta-extensions:${jooqVersion}")
+	jooqRuntime("org.jooq:jooq-meta:${jooqVersion}")
+	jooqRuntime("org.jooq:jooq-codegen:${jooqVersion}")
+	jooqRuntime(files(sourceSets.main.output.classesDirs))
+	
+	jooqRuntime("com.h2database:h2:1.4.184")
+	jooqRuntime("org.hibernate:hibernate-core:5.1.17.Final")
+    
+}
+
+jooq {
+    version = jooqVersion
+    edition = 'OSS'
+    project(sourceSets.main) {
+        generator {
+            name = 'org.jooq.codegen.DefaultGenerator'
+			strategy {
+				//name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+				name = 'org.springframework.boot.orientdb.hello.OrientGeneratorStrategy'
+			}
+			database {
+                name = 'org.jooq.meta.extensions.jpa.JPADatabase'
+				inputSchema = ''
+				//renderNameStyle='AS_IS'
+				//includeTables = false
+				
+                properties {
+                    property {
+                        key = "packages"
+                        value = "org.springframework.boot.orientdb.hello.data"
+                    }
+				
+                }
+				
+                includes = ".*"
+            }
+			generate {
+				//records = true
+				//relations = true
+				//springAnnotations = true
+				//deprecated = false
+				//fluentSetters = true
+				//javaTimeTypes = true
+				//generatedAnnotation = true
+				jpaAnnotations = true
+			}
+            target {
+                packageName = 'org.springframework.boot.orientdb.hello'
+                directory = 'src/jooq/java'
+                encoding = 'UTF-8'
+            }
+        }
+    }
+}
+/*
+tasks.generateProjectJooqSchemaSource.with {
+	javaExecSpec = { JavaExecSpec s ->
+		s.jvmArgs '--add-modules', 'java.xml.bind'
+	}
+}
+*/
+project.tasks.getByName('compileJava').dependsOn -= 'generateProjectJooqSchemaSource'

@@ -1,18 +1,19 @@
 package org.springframework.data.orient.commons.repository.query;
 
-import org.jooq.SortField;
-import org.jooq.SortOrder;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.domain.Sort.Order;
-import org.springframework.data.orient.commons.repository.OrientSource;
-import org.springframework.util.Assert;
+import static org.jooq.impl.DSL.field;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.jooq.impl.DSL.field;
+import org.jooq.SortField;
+import org.jooq.SortOrder;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
+import org.springframework.data.orient.commons.repository.DefaultSource;
+import org.springframework.data.orient.commons.repository.OrientSource;
+import org.springframework.util.Assert;
 
 /**
  * Utility class to create Orient queries.
@@ -33,7 +34,7 @@ public final class QueryUtils {
      * @return the string
      */
     public static String applySorting(String query, Sort sort) {
-        Assert.hasText(query);
+        Assert.hasText(query,"Query not be empty");
         
         if (null == sort || !sort.iterator().hasNext()) {
             return query;
@@ -66,8 +67,12 @@ public final class QueryUtils {
         return new StringBuilder("cluster:").append(clusterName).toString();
     }
     
-    public static String toSource(Class<?> domainClass) {
+    public static String toSourceSimple(Class<?> domainClass) {
         return domainClass.getSimpleName();
+    }
+    
+    public static String toSource(Class<?> domainClass) {
+    	return toSource(new DefaultSource(domainClass));
     }
     
     public static String toSource(OrientSource source) {
@@ -80,4 +85,6 @@ public final class QueryUtils {
         
         return null;
     }
+    
+   
 }

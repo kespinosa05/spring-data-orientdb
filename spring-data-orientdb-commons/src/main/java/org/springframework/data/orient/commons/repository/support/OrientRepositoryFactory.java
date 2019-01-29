@@ -56,20 +56,6 @@ public class OrientRepositoryFactory extends RepositoryFactorySupport {
 		this.mappingContext = operations.getConverter().getMappingContext();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.springframework.data.repository.core.support.RepositoryFactorySupport#
-	 * getEntityInformation(java.lang.Class)
-	 
-	@Override
-	@SuppressWarnings("unchecked")
-	public <T, ID> EntityInformation<T, ID> getEntityInformation(Class<T> domainClass) {
-		return (EntityInformation<T, ID>) new OrientMetamodelEntityInformation<>(domainClass);
-	}
-*/
-	
 	@Override
 	protected Object getTargetRepository(RepositoryInformation metadata) {
 		EntityInformation<?, Serializable> entityInformation = getEntityInformation(metadata.getDomainType());

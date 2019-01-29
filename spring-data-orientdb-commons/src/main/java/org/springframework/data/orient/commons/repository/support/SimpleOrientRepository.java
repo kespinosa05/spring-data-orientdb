@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.orient.commons.core.OrientOperations;
 import org.springframework.data.orient.commons.repository.OrientRepository;
 import org.springframework.data.orient.commons.repository.OrientSource;
+import org.springframework.data.orient.commons.repository.query.JooqUtils;
 import org.springframework.data.orient.commons.repository.query.QueryUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -340,7 +341,7 @@ public class SimpleOrientRepository<T> implements OrientRepository<T> {
      * @return the query
      */
     private OSQLQuery<T> getQuery(String source, Sort sort) {
-        Query query = DSL.using(SQLDialect.MYSQL).select().from(source).orderBy(QueryUtils.toOrders(sort));
+        Query query = JooqUtils.context().select().from(source).orderBy(QueryUtils.toOrders(sort));
 
         return new OSQLSynchQuery<>(query.getSQL(ParamType.INLINED));
     }
@@ -352,7 +353,7 @@ public class SimpleOrientRepository<T> implements OrientRepository<T> {
      * @return the query
      */
     private OSQLQuery<T> getQuery(Pageable pageable) {
-        DSLContext context = DSL.using(SQLDialect.MYSQL);
+        DSLContext context = JooqUtils.context();
         SelectJoinStep<? extends Record> joinStep = context.select().from(domainClass.getSimpleName());
         
         Sort sort = pageable.getSort();

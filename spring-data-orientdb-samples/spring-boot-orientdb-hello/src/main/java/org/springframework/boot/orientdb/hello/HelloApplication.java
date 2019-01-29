@@ -1,7 +1,9 @@
 package org.springframework.boot.orientdb.hello;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +11,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.orientdb.hello.data.Person;
-import org.springframework.boot.orientdb.hello.data.QPerson;
 import org.springframework.boot.orientdb.hello.repository.IPersonRepository;
-import org.springframework.boot.orientdb.hello.repository.PersonRepository;
+import org.springframework.boot.orientdb.hello.repository.PersonRepositoryImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.orient.object.OrientObjectDatabaseFactory;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -25,11 +26,11 @@ import lombok.extern.slf4j.Slf4j;
 public class HelloApplication implements CommandLineRunner {
 
 	@Autowired
-	private PersonRepository repository;
+	private PersonRepositoryImpl repository;
 
 	@Autowired
 	private IPersonRepository iRepository;
-	
+
 	@Autowired
 	private OrientObjectDatabaseFactory factory;
 
@@ -53,11 +54,53 @@ public class HelloApplication implements CommandLineRunner {
 				db.close();
 			}
 		}
+
+		repository.custom();
 		
-		iRepository.findAll(QPerson.person.firstName.eq("Graham"));
-		
-		
+		// iRepository.findAll(QPerson.person.firstName.eq("Graham"));
+
 		if (repository.count() < 1) {
+
+			// Create Persons if required
+
+			List<Person> persons = new ArrayList<>();
+
+			Person graham = new Person();
+			graham.setFirstName("Graham");
+			graham.setLastName("Jacobson");
+			graham.setAge(25);
+
+			persons.add(graham);
+
+			Person ebony = new Person();
+			ebony.setFirstName("Ebony");
+			ebony.setLastName("Irwin");
+			ebony.setAge(21);
+
+			persons.add(ebony);
+
+			Person benedict = new Person();
+			benedict.setFirstName("Benedict");
+			benedict.setLastName("Preston");
+			benedict.setAge(25);
+
+			persons.add(benedict);
+
+			Person zorita = new Person();
+			zorita.setFirstName("Zorita");
+			zorita.setLastName("Clements");
+			zorita.setAge(23);
+
+			persons.add(zorita);
+
+			Person kaitlin = new Person();
+			kaitlin.setFirstName("Kaitlin");
+			kaitlin.setLastName("Walter");
+			kaitlin.setAge(22);
+
+			persons.add(kaitlin);
+
+			repository.saveAll(persons);
 
 			long initTime = new Date().getTime();
 			log.debug("Init Data generator:{}", initTime);
@@ -65,51 +108,18 @@ public class HelloApplication implements CommandLineRunner {
 			while (i < 2000) {
 				final Integer b = i++;
 				threadPoolTaskExecutor.submit(() -> {
-					Person kaitlin = new Person();
-					kaitlin.setFirstName("Kaitlin" + b);
-					kaitlin.setLastName("Walter" + b);
-					kaitlin.setAge(22);
+					Person kaitlinI = new Person();
+					kaitlinI.setFirstName("Kaitlin" + b);
+					kaitlinI.setLastName("Walter" + b);
+					kaitlinI.setAge(22);
 
-					repository.save(kaitlin);
+					repository.save(kaitlinI);
 				});
 			}
 
 			long endTime = new Date().getTime();
 			log.debug("End Data generator:{},Time:{}", endTime, endTime - initTime);
-			/*
-			 * 
-			 * //Create Persons if required
-			 * 
-			 * List<Person> persons = new ArrayList<>();
-			 * 
-			 * Person graham = new Person(); graham.setFirstName("Graham");
-			 * graham.setLastName("Jacobson"); graham.setAge(25);
-			 * 
-			 * persons.add(graham);
-			 * 
-			 * Person ebony = new Person(); ebony.setFirstName("Ebony");
-			 * ebony.setLastName("Irwin"); ebony.setAge(21);
-			 * 
-			 * persons.add(ebony);
-			 * 
-			 * Person benedict = new Person(); benedict.setFirstName("Benedict");
-			 * benedict.setLastName("Preston"); benedict.setAge(25);
-			 * 
-			 * persons.add(benedict);
-			 * 
-			 * Person zorita = new Person(); zorita.setFirstName("Zorita");
-			 * zorita.setLastName("Clements"); zorita.setAge(23);
-			 * 
-			 * persons.add(zorita);
-			 * 
-			 * Person kaitlin = new Person(); kaitlin.setFirstName("Kaitlin");
-			 * kaitlin.setLastName("Walter"); kaitlin.setAge(22);
-			 * 
-			 * persons.add(kaitlin);
-			 * 
-			 * repository.saveAll(persons);
-			 * 
-			 */
+
 		}
 	}
 

@@ -20,8 +20,6 @@ import org.springframework.data.orient.commons.repository.query.OrientEntityInfo
 import org.springframework.data.repository.core.support.PersistentEntityInformation;
 import org.springframework.lang.Nullable;
 
-import com.sun.corba.se.spi.ior.ObjectId;
-
 /**
  * {@link OrientEntityInformation} implementation using a {@link OrientPersistentEntity} instance to lookup the necessary
  * information. Can be configured with a custom collection to be returned which will trump the one returned by the
@@ -85,7 +83,7 @@ public class MappingOrientEntityInformation<T, ID> extends PersistentEntityInfor
 
 		this.entityMetadata = entity;
 		this.customCollectionName = customCollectionName;
-		this.fallbackIdType = idType != null ? idType : (Class<ID>) ObjectId.class;
+		this.fallbackIdType = idType != null ? idType : (Class<ID>) String.class;
 	}
 
 	/* (non-Javadoc)

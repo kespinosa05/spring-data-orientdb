@@ -12,5 +12,5 @@ import org.springframework.data.repository.NoRepositoryBean;
 @NoRepositoryBean
 public interface OrientObjectRepository<T> extends OrientRepository<T> {
     
-    T detachAll(T entity);
+    //T detachAll(T entity);
 }

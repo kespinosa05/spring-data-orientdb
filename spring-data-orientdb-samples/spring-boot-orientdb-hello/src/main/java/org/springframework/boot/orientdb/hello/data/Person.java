@@ -1,43 +1,39 @@
 package org.springframework.boot.orientdb.hello.data;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Version;
 
 import org.springframework.data.orient.commons.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.querydsl.core.annotations.QueryEntity;
 
+@Entity
+@Table(name = "PERSON", schema = "")
 @JsonIgnoreProperties(value = {"handler"})
-@QueryEntity
 public class Person {
 
     @Id
+    @Column(name="ID")
     private String id;
     
     @Version
     @JsonIgnore
     private Long version;
     
-    /**
-     * Added to avoid a runtime error whereby the detachAll property is checked
-     * for existence but not actually used.
-     */
-    private String detachAll;
-    private String exists;
-    private String count;
-    private String findOne;
-    private String findAll;
-    
-    
-    @Field
+    @Field("first_Name")
+    @Column(name="first_Name")
     private String firstName;
     
-    @Field
+    @Field("last_Name")
+    @Column(name="last_Name")
     private String lastName;
     
-    @Field
+    @Field("age")
+    @Column(name="age")
     private Integer age;
 
     public String getId() {

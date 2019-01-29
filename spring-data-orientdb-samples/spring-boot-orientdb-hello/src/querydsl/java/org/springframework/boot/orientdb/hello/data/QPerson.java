@@ -21,16 +21,6 @@ public class QPerson extends EntityPathBase<Person> {
 
     public final NumberPath<Integer> age = createNumber("age", Integer.class);
 
-    public final StringPath count = createString("count");
-
-    public final StringPath detachAll = createString("detachAll");
-
-    public final StringPath exists = createString("exists");
-
-    public final StringPath findAll = createString("findAll");
-
-    public final StringPath findOne = createString("findOne");
-
     public final StringPath firstName = createString("firstName");
 
     public final StringPath id = createString("id");

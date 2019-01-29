@@ -1,15 +1,18 @@
 package org.springframework.data.orient.object;
 
-import com.orientechnologies.orient.core.annotation.OId;
-import com.orientechnologies.orient.object.db.OObjectDatabaseTx;
-import org.springframework.data.orient.commons.core.AbstractOrientOperations;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.data.orient.commons.core.AbstractOrientOperations;
+import org.springframework.data.orient.commons.repository.DetachMode;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.orientechnologies.orient.core.annotation.OId;
+import com.orientechnologies.orient.core.query.OQuery;
+import com.orientechnologies.orient.object.db.OObjectDatabaseTx;
 
 @Transactional
 public class OrientObjectTemplate extends AbstractOrientOperations<Object> implements OrientObjectOperations {
@@ -95,7 +98,7 @@ public class OrientObjectTemplate extends AbstractOrientOperations<Object> imple
         return (RET)getObjectDatabase().detachAll(entity, true);
     }
 
-/**
+
     @Override
     public <RET extends List<?>> RET query(OQuery<?> query, DetachMode detachMode, Object... args) {
         RET result = query(query, args);
@@ -111,6 +114,7 @@ public class OrientObjectTemplate extends AbstractOrientOperations<Object> imple
         return result;
     }
 
+    /**
     @Override
     @SuppressWarnings("unchecked")
     public <RET extends List<?>> RET detach(RET list) {

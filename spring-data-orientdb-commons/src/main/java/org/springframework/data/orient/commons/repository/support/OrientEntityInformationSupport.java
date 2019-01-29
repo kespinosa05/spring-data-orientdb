@@ -28,7 +28,7 @@ import org.springframework.util.Assert;
  * @author Mark Paluch
  * @since 1.10
  */
-final class OrientEntityInformationSupport {
+public final class OrientEntityInformationSupport {
 
 	private OrientEntityInformationSupport() {}
 
@@ -40,7 +40,7 @@ final class OrientEntityInformationSupport {
 	 * @return never {@literal null}.
 	 */
 	@SuppressWarnings("unchecked")
-	static <T, ID> OrientEntityInformation<T, ID> entityInformationFor(OrientPersistentEntity<?> entity,
+	public static <T, ID> OrientEntityInformation<T, ID> entityInformationFor(OrientPersistentEntity<?> entity,
 			@Nullable Class<?> idType) {
 
 		Assert.notNull(entity, "Entity must not be null!");

@@ -9,13 +9,13 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository("generatedPersonRepository")
-public interface IPersonRepository  extends OrientObjectRepository<Person>,QuerydslPredicateExecutor<Person>   {
-    /*
+public interface IPersonRepository  extends OrientObjectRepository<Person>/*,QuerydslPredicateExecutor<Person>*/   {
+    
 	List<Person> findByFirstName(String firstName);
 
     @Query("select from person where lastName = ?")
     List<Person> findByLastName(String lastName);
 
     List<Person> findByAge(Integer age);
-    */
+    
 }

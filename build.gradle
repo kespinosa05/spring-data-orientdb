@@ -32,7 +32,7 @@ configurations.all {
 }
 
 //Script para la publicacion y descarga de artefactos en el Nexus
-apply from: "http://proyectos:7990/projects/GP/repos/maven-scripts/browse/publish-maven.gradle?raw"
+//apply from: "http://proyectos:7990/projects/GP/repos/maven-scripts/browse/publish-maven.gradle?raw"
 
 dependencies {
     compile group: 'org.slf4j', name: 'slf4j-api', version:'1.7.13'

@@ -1,4 +1,31 @@
+
+buildscript {
+    ext {
+        //----------------------------------------
+        // PLUGINS
+        //----------------------------------------
+        jooqPluginVersion = '3.0.2'
+
+        //----------------------------------------
+        // REPOSITORIES
+        //----------------------------------------
+        jooqVersion = '3.11.9'
+    }
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath("nu.studer:gradle-jooq-plugin:${jooqPluginVersion}")
+    }
+}
+
+apply from: 'jooq.gradle'
+
 apply from: "http://proyectos:7990/projects/GP/repos/maven-scripts/browse/querydsl.gradle?raw"
+
 
 group = 'org.springframework.boot.samples'
 description = 'Sample - Spring Boot OrientDB Hello'
@@ -18,7 +45,15 @@ dependencies {
     
     compile('org.hibernate.validator:hibernate-validator:6.0.13.Final')
     
+    jooqRuntime project(':spring-data-orientdb-object')
+    jooqRuntime project(':spring-data-orientdb-commons')
+    jooqRuntime("org.jooq:jooq:${jooqVersion}")
+    jooqRuntime("org.jooq:jooq-meta-extensions:${jooqVersion}")
+    //jooqRuntime("mysql:mysql-connector-java:${mysqlConnectorVersion}")
+    jooqRuntime("com.h2database:h2:1.4.184")
+    jooqRuntime(files(sourceSets.main.output.classesDirs))
     
+    compile("org.jooq:jooq-codegen:${jooqVersion}")
     
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'2.1.2.RELEASE') {
 		exclude(module: 'hibernate-validator')

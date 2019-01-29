@@ -50,7 +50,7 @@ public class OrientQueryCreator extends AbstractQueryCreator<String, Condition> 
         super(tree, parameters);
         
         this.method = method;
-        this.context = DSL.using(SQLDialect.MYSQL);
+        this.context = JooqUtils.context();
         this.tree = tree;
         this.accessor = parameters;
         this.paramType = paramType;

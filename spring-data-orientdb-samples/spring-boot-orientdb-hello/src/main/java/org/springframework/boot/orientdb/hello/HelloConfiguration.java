@@ -14,11 +14,12 @@ import org.springframework.data.orient.commons.core.OrientTransactionManager;
 import org.springframework.data.orient.commons.repository.config.EnableOrientRepositories;
 import org.springframework.data.orient.object.OrientObjectDatabaseFactory;
 import org.springframework.data.orient.object.OrientObjectTemplate;
+import org.springframework.data.orient.object.repository.support.OrientObjectRepositoryFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@EnableOrientRepositories(basePackages = "org.springframework.boot.orientdb.hello.repository")
+@EnableOrientRepositories(basePackages = "org.springframework.boot.orientdb.hello.repository", repositoryFactoryBeanClass = OrientObjectRepositoryFactoryBean.class)
 @EnableAutoConfiguration
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableConfigurationProperties(OrientProperties.class)
